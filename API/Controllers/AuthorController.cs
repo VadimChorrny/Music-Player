@@ -26,9 +26,9 @@ namespace API.Controllers
             return Ok(await _authorService.Get());
         }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<AuthorPlaylistsDTO>> Get(int id)
+        public async Task<ActionResult<AuthorDTO>> Get(int id)
         {
-            var author = await _authorService.GetAuthorPlaylist(id);
+            var author = await _authorService.GetAuthorById(id);
             _logger.LogInformation($"Got a author with id {id}");
             return author;
         }

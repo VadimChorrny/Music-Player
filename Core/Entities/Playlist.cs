@@ -14,7 +14,7 @@ namespace Core.Entities
         public string Name { get; set; }
         public int? AuthorId { get; set; }
         public Author Author { get; set; }
-        public ICollection<Track> Tracks { get; set; }
+        public List<Track> Tracks { get; set; }
     }
 }
 

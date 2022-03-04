@@ -12,7 +12,7 @@ namespace Core.Entities
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public virtual ICollection<Track> Tracks { get; set; }
+        public List<Track> Tracks { get; set; }
     }
 }
 
