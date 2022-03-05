@@ -15,43 +15,43 @@ namespace Core.Services
 {
     public class GanreService : IGanreService
     {
-        private readonly IRepository<Ganre> _ganreRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public GanreService(IRepository<Ganre> repository,IMapper mapper)
+        public GanreService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _ganreRepository = repository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task Create(GanreDTO ganre)
         {
             if (ganre == null)
                 throw new HttpException($"Error with create new ganre!", HttpStatusCode.NotFound);
-            await _ganreRepository.Insert(_mapper.Map<Ganre>(ganre));
-            await _ganreRepository.SaveChangesAsync();
+            await _unitOfWork.GanreRepository.Insert(_mapper.Map<Ganre>(ganre));
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task Delete(int id)
         {
             if (id < 0) throw new HttpException($"Invalid id!", HttpStatusCode.NotFound);
-            var ganre = _ganreRepository.GetById(id);
+            var ganre = _unitOfWork.GanreRepository.GetById(id);
             if (ganre != null)
-                await _ganreRepository.Delete(ganre);
-            await _ganreRepository.SaveChangesAsync();
+                await _unitOfWork.GanreRepository.Delete(ganre);
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task Edit(GanreDTO ganre)
         {
             if (ganre == null)
                 throw new HttpException($"Error with edit ganre!", HttpStatusCode.NotFound);
-            _ganreRepository.Update(_mapper.Map<Ganre>(ganre));
-            await _ganreRepository.SaveChangesAsync();
+            _unitOfWork.GanreRepository.Update(_mapper.Map<Ganre>(ganre));
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task<IEnumerable<GanreDTO>> Get()
         {
-            return _mapper.Map<IEnumerable<GanreDTO>>(await _ganreRepository.Get());
+            return _mapper.Map<IEnumerable<GanreDTO>>(await _unitOfWork.GanreRepository.Get());
         }
         public async Task<GanreDTO> GetGanreById(int id)
         {
             if (id < 0) throw new HttpException($"Invalid id!", HttpStatusCode.BadGateway);
-            var author = _ganreRepository.GetById(id);
+            var author = _unitOfWork.GanreRepository.GetById(id);
             if (author == null) throw new HttpException($"Ganre Not Found!", HttpStatusCode.NotFound);
             return _mapper.Map<GanreDTO>(await author);
         }

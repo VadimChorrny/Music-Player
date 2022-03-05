@@ -22,6 +22,7 @@ namespace API
             services.AddControllers();
             services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
             services.AddCustomServices();
+            services.AddUnitOfWork();
             services.AddRepository();
             services.AddAutoMapper();
             services.AddSwaggerGen(c =>

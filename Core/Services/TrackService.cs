@@ -15,11 +15,11 @@ namespace Core.Services
 {
     public class TrackService : ITrackService
     {
-        private readonly IRepository<Track> _trackRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public TrackService(IRepository<Track> repository, IMapper mapper)
+        public TrackService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _trackRepository = repository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         // METHODS FOR SERVICES
@@ -27,32 +27,32 @@ namespace Core.Services
         {
             if (track == null)
                 throw new HttpException($"Error with create new track!", HttpStatusCode.NotFound);
-            await _trackRepository.Insert(_mapper.Map<Track>(track));
-            await _trackRepository.SaveChangesAsync();
+            await _unitOfWork.TrackRepository.Insert(_mapper.Map<Track>(track));
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task Delete(int id)
         {
             if (id < 0) throw new HttpException($"Invalid id!", HttpStatusCode.NotFound);
-            var track = _trackRepository.GetById(id);
+            var track = _unitOfWork.TrackRepository.GetById(id);
             if(track != null)
-                await _trackRepository.Delete(track);
-            await _trackRepository.SaveChangesAsync();
+                await _unitOfWork.TrackRepository.Delete(track);
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task Edit(TrackDTO track)
         {
             if(track == null)
                 throw new HttpException($"Error with edit track!",HttpStatusCode.NotFound);
-            _trackRepository.Update(_mapper.Map<Track>(track));
-            await _trackRepository.SaveChangesAsync();
+            _unitOfWork.TrackRepository.Update(_mapper.Map<Track>(track));
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task<IEnumerable<TrackDTO>> Get()
         {
-            return _mapper.Map<IEnumerable<TrackDTO>>(await _trackRepository.Get());
+            return _mapper.Map<IEnumerable<TrackDTO>>(await _unitOfWork.TrackRepository.Get());
         }
         public async Task<TrackDTO> GetTrackById(int id)
         {
             if (id < 0) throw new HttpException($"Invalid id!", HttpStatusCode.BadGateway);
-            var track = _trackRepository.GetById(id);
+            var track = _unitOfWork.TrackRepository.GetById(id);
             if (track == null) throw new HttpException($"Track Not Found!", HttpStatusCode.NotFound);
             return _mapper.Map<TrackDTO>(await track);
         }

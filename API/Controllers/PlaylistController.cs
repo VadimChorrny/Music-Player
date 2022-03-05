@@ -31,6 +31,13 @@ namespace API.Controllers
             _logger.LogInformation($"Got a playlist with id {id}");
             return playlist;
         }
+        [HttpGet]
+        [Route("get-tracks")]
+        public async Task<ActionResult<IEnumerable<PlaylistDTO>>> GetAllTracks(int id) // change to trackdto
+        {
+            var tracks = await _playlistService.GetAllTrackFromPlaylist(id);
+            return Ok(tracks);
+        }
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] PlaylistDTO playlist)
         {
