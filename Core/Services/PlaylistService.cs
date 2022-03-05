@@ -55,5 +55,11 @@ namespace Core.Services
             if (playlist == null) throw new HttpException($"Playlist Not Found!", HttpStatusCode.NotFound);
             return _mapper.Map<PlaylistDTO>(await playlist);
         }
+        public async Task<IEnumerable<TrackDTO>> GetAllTrackFromPlaylist(int id)
+        {
+            if (id < 0) throw new HttpException($"Invalid id {id}!", HttpStatusCode.BadGateway);
+            var tracks = _mapper.Map<IEnumerable<TrackDTO>>(await _playlistRepository.Get(e => e.Id == id));
+            return tracks;
+        }
     }
 }

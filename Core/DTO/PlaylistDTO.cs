@@ -13,6 +13,6 @@ namespace Core.DTO
         public string Name { get; set; }
         public int? AuthorId { get; set; }
         public Author Author { get; set; }
-        public ICollection<Track> Tracks { get; set; }
+        public IEnumerable<Track> Tracks { get; set; }
     }
 }

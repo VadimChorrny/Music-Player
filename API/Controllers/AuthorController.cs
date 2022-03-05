@@ -32,6 +32,15 @@ namespace API.Controllers
             _logger.LogInformation($"Got a author with id {id}");
             return author;
         }
+        [HttpGet]
+        [Route("get-all")]
+        public async Task<ActionResult<IEnumerable<AuthorPlaylistsDTO>>> GetAllPlaylists(int id)
+        {
+            var playlists = await _authorService.GetAuthorPlaylist(id);
+            return Ok(playlists);
+        }
+
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] AuthorDTO author)
         {

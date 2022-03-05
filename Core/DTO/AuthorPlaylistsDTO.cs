@@ -9,7 +9,7 @@ namespace Core.DTO
 {
     public class AuthorPlaylistsDTO
     {
-        public virtual ICollection<Playlist> Playlists { get; set; }
-        public virtual ICollection<Track> Tracks { get; set; }
+        public int Id { get; set; }
+        public IEnumerable<PlaylistDTO> Playlists { get; set; }
     }
 }

@@ -16,10 +16,14 @@ namespace Core.Services
     public class AuthorService : IAuthorService
     {
         private readonly IRepository<Author> _authorRepository;
+        private readonly IRepository<Playlist> _playlistRepository;
         private readonly IMapper _mapper;
-        public AuthorService(IRepository<Author> repository, IMapper mapper)
+        public AuthorService(IRepository<Author> repository,
+            IRepository<Playlist> playlist,
+            IMapper mapper)
         {
             _authorRepository = repository;
+            _playlistRepository = playlist;
             _mapper = mapper;
         }
         // METHODS FOR SERVICES
@@ -56,12 +60,12 @@ namespace Core.Services
             if (author == null) throw new HttpException($"Author Not Found!", HttpStatusCode.NotFound);
             return _mapper.Map<AuthorDTO>(await author);
         }
-        public async Task<AuthorPlaylistsDTO> GetAuthorPlaylist(int id)
+        
+        public async Task<IEnumerable<PlaylistDTO>> GetAuthorPlaylist(int id)
         {
             if (id < 0) throw new HttpException($"Invalid id {id}!",HttpStatusCode.BadGateway);
-            var playlists = _authorRepository.GetById(id);
-            if(playlists == null) throw new HttpException($"Playlist not found",HttpStatusCode.NotFound);
-            return _mapper.Map<AuthorPlaylistsDTO>(await _authorRepository.Get());
+            var playlists =  _mapper.Map<IEnumerable<PlaylistDTO>>(await _playlistRepository.Get(e => e.AuthorId == id));
+            return playlists;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Core.Interfaces.CustomServices
     {
         Task<IEnumerable<AuthorDTO>> Get();
         Task<AuthorDTO> GetAuthorById(int id);
-        Task<AuthorPlaylistsDTO> GetAuthorPlaylist(int id);
+        Task<IEnumerable<PlaylistDTO>> GetAuthorPlaylist(int id);
         Task Create(AuthorDTO track);
         Task Edit(AuthorDTO track);
         Task Delete(int id);

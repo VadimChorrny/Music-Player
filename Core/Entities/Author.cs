@@ -14,8 +14,8 @@ namespace Core.Entities
         public string FullName { get; set; }
         [Required]
         public string Nickname { get; set; }
-        public List<Playlist> Playlists { get; set; }
-        public List<Track> Tracks { get; set; }
+        public IEnumerable<Playlist> Playlists { get; set; }
+        public IEnumerable<Track> Tracks { get; set; }
     }
 
     // Клас для автора

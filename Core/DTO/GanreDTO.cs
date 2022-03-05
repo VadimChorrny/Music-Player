@@ -11,6 +11,6 @@ namespace Core.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Track> Tracks { get; set; }
+        public IEnumerable<Track> Tracks { get; set; }
     }
 }

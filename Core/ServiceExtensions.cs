@@ -29,7 +29,6 @@ namespace Core
                 mc.CreateMap<Playlist, PlaylistDTO>().ReverseMap();
                 mc.CreateMap<Ganre, GanreDTO>().ReverseMap();
                 mc.CreateMap<Author, AuthorDTO>().ReverseMap();
-                mc.CreateMap<Author, AuthorPlaylistsDTO>().ReverseMap();
             });
 
             IMapper mapper = configures.CreateMapper();
