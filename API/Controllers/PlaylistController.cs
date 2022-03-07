@@ -13,7 +13,8 @@ namespace API.Controllers
     {
         private readonly IPlaylistService _playlistService;
         private readonly ILogger<PlaylistController> _logger;
-        public PlaylistController(IPlaylistService playlistService, ILogger<PlaylistController> logger)
+        public PlaylistController(IPlaylistService playlistService,
+            ILogger<PlaylistController> logger)
         {
             _playlistService = playlistService;
             _logger = logger;
